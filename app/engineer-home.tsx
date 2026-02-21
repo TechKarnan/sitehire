@@ -33,7 +33,13 @@ export default function WorkerHome() {
     try {
       isRefresh ? setRefreshing(true) : setLoading(true);
 
-         let loc = await Location.getCurrentPositionAsync({});
+        let loc = await Location.getLastKnownPositionAsync();
+      
+      if (!loc) {
+        loc = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Balanced,
+        });
+      }
             const coords = { latitude: loc.coords.latitude, longitude: loc.coords.longitude };
       
             const { latitude, longitude } = coords;

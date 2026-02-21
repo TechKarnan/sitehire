@@ -27,7 +27,7 @@ export default function SkillsScreen() {
 
   useEffect(() => {
     fetchSkills();
-    updateLocationInBackground();
+   // updateLocationInBackground();
   }, []);
 
   // Fetch skills without waiting for location

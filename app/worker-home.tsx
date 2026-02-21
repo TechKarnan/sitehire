@@ -30,9 +30,15 @@ export default function WorkerHome() {
   const fetchNearbyEngineers = async (isRefresh = false) => {
     try {
       isRefresh ? setRefreshing(true) : setLoading(true);
-      let loc = await Location.getCurrentPositionAsync({});
-      const coords = { latitude: loc.coords.latitude, longitude: loc.coords.longitude };
+  let loc = await Location.getLastKnownPositionAsync();
 
+if (!loc) {
+  loc = await Location.getCurrentPositionAsync({
+    accuracy: Location.Accuracy.Balanced,
+  });
+}
+      const coords = { latitude: loc.coords.latitude, longitude: loc.coords.longitude };
+     console.log("Current Location:", coords);
       const { latitude, longitude } = coords;
       const response = await api.get(`/engineer/nearby?lat=${latitude}&lon=${longitude}&skill=${selectedSkill}`);
       setEngineers(response.data);
