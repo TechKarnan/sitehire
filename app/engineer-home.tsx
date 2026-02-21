@@ -37,7 +37,7 @@ export default function WorkerHome() {
             const coords = { latitude: loc.coords.latitude, longitude: loc.coords.longitude };
       
             const { latitude, longitude } = coords;
-            const response = await api.get(`/worker/nearby?lat=${latitude}&lon=${longitude}`);
+            const response = await api.get(`/worker/nearby?lat=${latitude}&lon=${longitude}&skill=${selectedSkill}`);
 
       setEngineers(response.data);
     } catch (err) {
