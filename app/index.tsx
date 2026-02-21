@@ -12,20 +12,18 @@ export default function Login() {
   const login = async () => {
     try {
       const res = await api.post("/auth/login", { phone, mpin });
+      const user = res.data;
 
-      if (res.data.role === "WORKER") {
-        router.replace({
-          pathname: "/worker-home",
-          params: { user: JSON.stringify(res.data) },
-        });
-      } else {
-        router.replace({
-          pathname: "/engineer-home",
-          params: { user: JSON.stringify(res.data) },
-        });
-      }
+      // ✅ Navigate to Skills screen and pass user + role
+      router.replace({
+        pathname: "/skills",
+        params: {
+          user: JSON.stringify(user),
+          role: user.role=="WORKER"?"ENGINEER":"WORKER", // "WORKER" or "ENGINEER"
+        },
+      });
     } catch (e) {
-      Alert.alert("Login failed");
+      Alert.alert("Login failed", "Invalid phone or MPIN");
     }
   };
 
@@ -33,8 +31,17 @@ export default function Login() {
     <View style={styles.container}>
       <Text style={styles.title}>SiteHire</Text>
 
-      <TextInput placeholder="Phone" style={styles.input} onChangeText={setPhone} />
-      <TextInput placeholder="MPIN" secureTextEntry style={styles.input} onChangeText={setMpin} />
+      <TextInput
+        placeholder="Phone"
+        style={styles.input}
+        onChangeText={setPhone}
+      />
+      <TextInput
+        placeholder="MPIN"
+        secureTextEntry
+        style={styles.input}
+        onChangeText={setMpin}
+      />
 
       <TouchableOpacity style={styles.button} onPress={login}>
         <Text style={{ color: "white" }}>Login</Text>
