@@ -33,6 +33,12 @@ export default function WorkerHome() {
     try {
       isRefresh ? setRefreshing(true) : setLoading(true);
 
+      const { status } = await Location.requestForegroundPermissionsAsync();
+
+if (status !== "granted") {
+  return;
+}
+
         let loc = await Location.getLastKnownPositionAsync();
       
       if (!loc) {

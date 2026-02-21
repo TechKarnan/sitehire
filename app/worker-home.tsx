@@ -30,6 +30,11 @@ export default function WorkerHome() {
   const fetchNearbyEngineers = async (isRefresh = false) => {
     try {
       isRefresh ? setRefreshing(true) : setLoading(true);
+      const { status } = await Location.requestForegroundPermissionsAsync();
+
+if (status !== "granted") {
+  return;
+}
   let loc = await Location.getLastKnownPositionAsync();
 
 if (!loc) {
