@@ -4,7 +4,7 @@
     "slug": "sitehire-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/blueprint.png",
     "scheme": "sitehireapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
